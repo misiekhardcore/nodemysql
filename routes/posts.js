@@ -1,10 +1,10 @@
 import connection from '../services/dbconnection.js'
 import express from 'express'
 
-const router = express()
+const postsrouter = express()
 const conn = connection
 
-router.get('/',(req,res)=>{
+postsrouter.get('/',(req,res)=>{
     conn.query('SELECT * FROM posts',(err, result)=>{
         if(err)
         res.json({status: 500, error: err, response: null})
@@ -15,7 +15,7 @@ router.get('/',(req,res)=>{
     })
 })
 
-router.get('/:id',(req,res)=>{
+postsrouter.get('/:id',(req,res)=>{
     conn.query('SELECT * FROM posts WHERE id=?',[req.params.id],(err, result)=>{
         if(err)
         res.json({status: 500, error: err, response: null})
@@ -26,7 +26,7 @@ router.get('/:id',(req,res)=>{
     })
 })
 
-router.post('/',(req,res)=>{
+postsrouter.post('/',(req,res)=>{
     conn.query('INSERT INTO posts (title, body) VALUES(?, ?)',[req.body.title, req.body.body],(err, result)=>{
         if(err)
         res.json({status: 500, error: err, response: null})
@@ -37,7 +37,7 @@ router.post('/',(req,res)=>{
     })
 })
 
-router.put('/:id',(req,res)=>{
+postsrouter.put('/:id',(req,res)=>{
     conn.query('UPDATE posts SET title = ?, body = ? WHERE id = ?',[req.body.title, req.body.body, req.params.id],(err, result)=>{
         if(err)
         res.json({status: 500, error: err, response: null})
@@ -47,7 +47,7 @@ router.put('/:id',(req,res)=>{
         res.json({status: 200, error: null, response: result})
     })
 })
-router.delete('/:id',(req,res)=>{
+postsrouter.delete('/:id',(req,res)=>{
     conn.query('DELETE FROM posts WHERE id=?',[req.params.id],(err, result)=>{
         if(err)
         res.json({status: 500, error: err, response: null})
@@ -56,4 +56,4 @@ router.delete('/:id',(req,res)=>{
     })
 })
 
-export default router
+export default postsrouter
